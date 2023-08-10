@@ -1,5 +1,5 @@
 alias: Pantry Status Instant
-description: ""
+description: "based on pantry status going from on to off and off to on. Turn on or turn off lights, set thermostats home/away and notify"
 trigger:
   - platform: state
     entity_id:
