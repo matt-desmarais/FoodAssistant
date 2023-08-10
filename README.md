@@ -11,3 +11,5 @@ This work is licensed under a
 
 # FoodAssistant
 home assistant + food pantry = food assistant
+
+![Food Assistant](https://raw.githubusercontent.com/matt-desmarais/FoodAssistant/main/FoodAssistantLogo.png)
