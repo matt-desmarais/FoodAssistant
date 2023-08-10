@@ -1,0 +1,7 @@
+binary_sensor:
+      pantry_status:
+        friendly_name: "Pantry Occupancy"
+        value_template: "{{ states('binary_sensor.motion_sensors') }}"
+        delay_off:
+          minutes: 15
+        device_class: "occupancy"
