@@ -1,0 +1,65 @@
+alias: Pantry Status Instant
+description: ""
+trigger:
+  - platform: state
+    entity_id:
+      - binary_sensor.pantry_status
+    from: "on"
+    to: "off"
+  - platform: state
+    entity_id:
+      - binary_sensor.pantry_status
+    from: "off"
+    to: "on"
+condition: []
+action:
+  - if:
+      - condition: state
+        entity_id: binary_sensor.pantry_status
+        state: "on"
+    then:
+      - service: light.turn_on
+        data:
+          color_name: hotpink
+          effect: Solid
+        target:
+          entity_id:
+            - light.piggy
+            - light.piggy2
+      - service: climate.set_preset_mode
+        data:
+          preset_mode: Home
+        target:
+          entity_id:
+            - climate.unit_9
+            - climate.unit_8
+        enabled: true
+      - service: notify.alarm_group
+        data:
+          message: Pantry Occupied as of {{ now().strftime('%m-%d %H:%M') }}
+  - if:
+      - condition: state
+        entity_id: binary_sensor.pantry_status
+        state: "off"
+    then:
+      - service: light.turn_off
+        data: {}
+        target:
+          entity_id:
+            - light.piggy
+            - light.back_door
+            - light.piggy2
+      - service: climate.set_preset_mode
+        data:
+          preset_mode: Home
+        target:
+          entity_id:
+            - climate.unit_8
+            - climate.unit_9
+        enabled: true
+      - service: notify.alarm_group
+        data:
+          message: >-
+            Pantry empty as of 15 minutes ago {{ now().strftime('%m-%d %H:%M')
+            }}
+mode: single
