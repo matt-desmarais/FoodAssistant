@@ -28,7 +28,7 @@ action:
             - light.piggy2
       - service: climate.set_preset_mode
         data:
-          preset_mode: Home
+          preset_mode: Away
         target:
           entity_id:
             - climate.unit_9
