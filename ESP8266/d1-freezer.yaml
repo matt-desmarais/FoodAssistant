@@ -1,0 +1,61 @@
+substitutions:
+  name: basement-freezer
+  friendly_name: Basement Freezer
+
+esphome:
+  name: ${name}-d1
+  platform: ESP8266
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Example configuration entry
+spi:
+  miso_pin: D8
+  clk_pin: D6
+
+sensor:
+  - platform: max31855
+    name: ${name} Temp
+    cs_pin: D7
+    update_interval: 6s
+    accuracy_decimals: 1
+    filters:
+    - lambda: return x * (9.0/5.0) + 32.0;
+    unit_of_measurement: "°F"
+    id: temp
+    reference_temperature:
+      id: sensor_temp_internal
+  # Uptime sensor.
+  - platform: uptime
+    name: ${name} Uptime
+
+  # WiFi Signal sensor.
+  - platform: wifi_signal
+    name: ${name} WiFi Signal
+    update_interval: 60s
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "HA API ENCRYPTION KEY"
+  services:
+    - service: temp_publish_zero_value
+      then:
+        - lambda: !lambda |-
+            id(temp).publish_state(-17.8);
+
+ota:
+  password: "OTA PASSWORD"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1-Freezer Fallback Hotspot"
+    password: "rMDLS7RkjQh0"
+
+captive_portal:
