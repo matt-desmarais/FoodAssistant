@@ -1,0 +1,75 @@
+esphome:
+  name: clientfreezerble
+  friendly_name: ClientFreezerBLE
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+esp32_ble_tracker:
+  scan_parameters:
+    duration: 60s
+    window: 120ms
+
+sensor:
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:F1:0F:FA"
+    temperature:
+      name: "BLE Temperature #1"
+      unit_of_measurement: "°F"
+      id: bletemp1
+    humidity:
+      name: "BLE Humidity #1"
+    battery_level:
+      name: "BLE Battery #1"
+  - platform: atc_mithermometer
+    mac_address: "A4:C1:38:0A:0F:0E"
+    temperature:
+      name: "BLE Temperature #2"
+      unit_of_measurement: "°F"
+      id: bletemp2
+    humidity:
+      name: "BLE Humidity #2"
+    battery_level:
+      name: "BLE Battery #2"
+
+button:
+  - platform: restart
+    name: "Client Freezer Restart"
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "HA API ENCCRYPTION KEY"
+  services:
+    - service: ble_1_publish_zero_value
+      then:
+        - lambda: !lambda |-
+            id(bletemp1).publish_state(0);
+    - service: ble_2_publish_zero_value
+      then:
+        - lambda: !lambda |-
+            id(bletemp2).publish_state(0);
+ota:
+  password: "OTA PASSWORD"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Clientfreezerble"
+    password: "aqe53NIAlDN4"
+
+captive_portal:
+    
+
+
+
+
+
