@@ -34,11 +34,11 @@ sensor:
     mac_address: 38:81:D7:0A:9C:11
     temperature:
       name: "IBS-TH1 Temperature"
+      id: bletemp2
     humidity:
       name: "IBS-TH1 Humidity"
     battery_level:
       name: "IBS-TH1 Battery Level"
-      id: bletemp2
 
 button:
   - platform: restart
