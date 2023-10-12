@@ -26,16 +26,13 @@ sensor:
       name: "BLE Humidity #1"
     battery_level:
       name: "BLE Battery #1"
-  - platform: atc_mithermometer
-    mac_address: "A4:C1:38:0A:0F:0E"
+  - platform: inkbird_ibsth1_mini
+    mac_address: 49:22:08:15:06:95
     temperature:
-      name: "BLE Temperature #2"
-      unit_of_measurement: "°F"
-      id: bletemp2
-    humidity:
-      name: "BLE Humidity #2"
+      name: "Freezer IBS-TH1 Temperature"
     battery_level:
-      name: "BLE Battery #2"
+      name: "Freezer IBS-TH1 Battery Level"
+      id: bletemp2
 
 button:
   - platform: restart
