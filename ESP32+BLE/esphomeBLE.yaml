@@ -1,6 +1,10 @@
-esphome:
+substitutions:
   name: clientfreezerble
-  friendly_name: ClientFreezerBLE
+  friendly_name: Client Freezer
+  
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
 
 esp32:
   board: esp32dev
@@ -19,19 +23,21 @@ sensor:
   - platform: atc_mithermometer
     mac_address: "A4:C1:38:F1:0F:FA"
     temperature:
-      name: "BLE Temperature #1"
+      name: "Mijia Temperature"
       unit_of_measurement: "°F"
       id: bletemp1
     humidity:
-      name: "BLE Humidity #1"
+      name: "Mijia Humidity"
     battery_level:
-      name: "BLE Battery #1"
+      name: "Mijia Battery"
   - platform: inkbird_ibsth1_mini
-    mac_address: 49:22:08:15:06:95
+    mac_address: 38:81:D7:0A:9C:11
     temperature:
-      name: "Freezer IBS-TH1 Temperature"
+      name: "IBS-TH1 Temperature"
+    humidity:
+      name: "IBS-TH1 Humidity"
     battery_level:
-      name: "Freezer IBS-TH1 Battery Level"
+      name: "IBS-TH1 Battery Level"
       id: bletemp2
 
 button:
